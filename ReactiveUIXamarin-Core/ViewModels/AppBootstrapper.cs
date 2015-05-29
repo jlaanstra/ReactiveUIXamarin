@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using ModernHttpClient;
+using ReactiveUI;
 using ReactiveUI.XamForms;
 using Splat;
 using System;
@@ -29,6 +30,15 @@ namespace ReactiveUIXamarin.Core.ViewModels
             // built-in one is super simple and easy to use, but it is also
             // possible to plugin your own awesome DI container.
             Locator.CurrentMutable.RegisterConstant(this, typeof(IScreen));
+
+            // Coolness: Set up Fusillade and ModernHttpClient
+            //
+            // Fusillade is a super cool library that will make it so that whenever
+            // we issue web requests, we'll only issue 4 concurrently, and if we
+            // end up issuing multiple requests to the same resource, it will
+            // de-dupe them. We're saying here, that we want our *backing*
+            // HttpMessageHandler to be ModernHttpClient.
+            Locator.CurrentMutable.RegisterConstant(new NativeMessageHandler(), typeof(HttpMessageHandler));
         }
 
         public Page CreateMainPage()
