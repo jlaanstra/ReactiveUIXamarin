@@ -56,6 +56,7 @@ namespace ReactiveUIXamarin.Core.ViewModels
             // Coolness: For routing to work, we need to tell ReactiveUI how to
             // create the Views associated with our ViewModels
             Locator.CurrentMutable.Register(() => new ImageListView(), typeof(IViewFor<ImageListViewModel>));
+            Locator.CurrentMutable.Register(() => new ImageTileView(), typeof(IViewFor<ImageTileViewModel>));
 
             // Kick off to the first page of our app. If we don't navigate to a
             // page on startup, Xamarin Forms will get real mad (and even if it

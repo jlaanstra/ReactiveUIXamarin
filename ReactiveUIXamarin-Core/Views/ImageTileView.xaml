@@ -5,7 +5,7 @@
     x:Class="ReactiveUIXamarin.Core.Views.ImageTileView">
 
     <ContentView.Content>
-        <Image x:Name="Image" HeightRequested="200" 
+        <Image x:Name="Image" HeightRequest="200" 
                HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
     </ContentView.Content>
 </ContentView>
