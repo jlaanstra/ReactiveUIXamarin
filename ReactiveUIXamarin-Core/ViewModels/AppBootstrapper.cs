@@ -1,7 +1,9 @@
 ﻿using ModernHttpClient;
 using ReactiveUI;
 using ReactiveUI.XamForms;
+using ReactiveUIXamarin.Core.BindingConverters;
 using ReactiveUIXamarin.Core.Services;
+using ReactiveUIXamarin.Core.Views;
 using Splat;
 using System;
 using System.Collections.Generic;
@@ -45,6 +47,15 @@ namespace ReactiveUIXamarin.Core.ViewModels
 
             //Register API service
             Locator.CurrentMutable.RegisterLazySingleton(() => new TinEyeApi(), typeof(ITinEyeApi));
+
+            // Coolness: by registering an IBindingConverter we tell 
+            // RxUI view bindings how to convert between types.
+            Locator.CurrentMutable.Register(() => new IntStringBindingConverter(), typeof(IBindingTypeConverter));
+            Locator.CurrentMutable.Register(() => new StringIntBindingConverter(), typeof(IBindingTypeConverter));
+
+            // Coolness: For routing to work, we need to tell ReactiveUI how to
+            // create the Views associated with our ViewModels
+            Locator.CurrentMutable.Register(() => new ImageListView(), typeof(IViewFor<ImageListViewModel>));
 
             // Kick off to the first page of our app. If we don't navigate to a
             // page on startup, Xamarin Forms will get real mad (and even if it

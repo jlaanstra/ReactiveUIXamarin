@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:views="clr-namespace:ReactiveUIXamarin.Core.Views;assembly=ReactiveUIXamarin-Core"
+    x:Class="ReactiveUIXamarin.Core.Views.ImageListView">
+    
+    <ContentPage.Content>
+        <Grid x:Name="LayoutRoot">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackLayout Orientation="Vertical">
+                <Label Text="Colors:" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Entry x:Name="Red" Placeholder="Red"  />
+                    <Entry x:Name="Green" Grid.Column="1" Placeholder="Green"  />
+                    <Entry x:Name="Blue" Grid.Column="2" Placeholder="Blue" />
+                </Grid>
+
+                <Label x:Name="Color" HeightRequest="24" />
+            </StackLayout>
+
+            <ListView x:Name="ImageTiles" Grid.Row="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <views:ImageTileView ViewModel="{Binding}" />
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
