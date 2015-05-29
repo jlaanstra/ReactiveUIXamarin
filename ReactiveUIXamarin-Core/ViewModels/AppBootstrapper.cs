@@ -16,7 +16,7 @@ namespace ReactiveUIXamarin.Core.ViewModels
     // Coolness: This class and anything under it will automatically get
     // saved and restored by ReactiveUI. This is a great place to put all
     // of your startup code - think of it as the "ViewModel for your app".
-    public class AppBootstrapper : ReactiveObject, IScreen
+    public class AppBootstrapper : ReactiveObject, IScreen, IAppState
     {
         // The Router holds the ViewModels for the back stack. Because it's
         // in this object, it will be serialized automatically.
@@ -32,6 +32,7 @@ namespace ReactiveUIXamarin.Core.ViewModels
             // built-in one is super simple and easy to use, but it is also
             // possible to plugin your own awesome DI container.
             Locator.CurrentMutable.RegisterConstant(this, typeof(IScreen));
+            Locator.CurrentMutable.RegisterConstant(this, typeof(IAppState));
 
             // Coolness: Set up Fusillade and ModernHttpClient
             //
@@ -44,6 +45,11 @@ namespace ReactiveUIXamarin.Core.ViewModels
 
             //Register API service
             Locator.CurrentMutable.RegisterLazySingleton(() => new TinEyeApi(), typeof(ITinEyeApi));
+
+            // Kick off to the first page of our app. If we don't navigate to a
+            // page on startup, Xamarin Forms will get real mad (and even if it
+            // didn't, our users would!)
+            Router.Navigate.Execute(new ImageListViewModel(this));
         }
 
         public Page CreateMainPage()
@@ -52,6 +58,27 @@ namespace ReactiveUIXamarin.Core.ViewModels
             // boilerplate code will look for. It will know to find us because
             // we've registered our AppBootstrapper as an IScreen.
             return new RoutedViewHost();
+        }
+
+        private int red;
+        public int Red
+        {
+            get { return red; }
+            set { this.RaiseAndSetIfChanged(ref red, value); }
+        }
+
+        private int green;
+        public int Green
+        {
+            get { return green; }
+            set { this.RaiseAndSetIfChanged(ref green, value); }
+        }
+
+        private int blue;
+        public int Blue
+        {
+            get { return blue; }
+            set { this.RaiseAndSetIfChanged(ref blue, value); }
         }
     }
 }

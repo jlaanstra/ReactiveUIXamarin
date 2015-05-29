@@ -36,12 +36,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Helpers\ColorHelper.cs" />
+    <Compile Include="IAppState.cs" />
     <Compile Include="Models\TinEyeResponses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReactiveUIXamarinApp.cs" />
     <Compile Include="Services\ITinEyeApi.cs" />
     <Compile Include="Services\TinEyeApi.cs" />
     <Compile Include="ViewModels\AppBootstrapper.cs" />
+    <Compile Include="ViewModels\ImageListViewModel.cs" />
+    <Compile Include="ViewModels\ImageTileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Fusillade, Version=0.6.0.0, Culture=neutral, processorArchitecture=MSIL">
