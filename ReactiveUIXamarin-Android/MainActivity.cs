@@ -5,26 +5,24 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Xamarin.Forms.Platform.Android;
+using Xamarin.Forms;
+using ReactiveUIXamarin.Core;
 
 namespace ReactiveUIXamarin.Android
 {
-    [Activity(Label = "ReactiveUIXamarin-Android", MainLauncher = true, Icon = "@drawable/icon")]
-    public class MainActivity : Activity
+    // Since Xamarin Forms 1.3, the main activity needs to inherit
+    // from FormsApplicationActivity.
+    [Activity(Label = "ReactiveUIXamarin-Android", MainLauncher = true)]
+    public class MainActivity : FormsApplicationActivity
     {
-        int count = 1;
-
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+            // Xamarin Forms initialization.
+            Forms.Init(this, bundle);
 
-            // Set our view from the "main" layout resource
-            SetContentView(Resource.Layout.Main);
-
-            // Get our button from the layout resource,
-            // and attach an event to it
-            Button button = FindViewById<Button>(Resource.Id.MyButton);
-
-            button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
+            LoadApplication(new ReactiveUIXamarinApp());
         }
     }
 }

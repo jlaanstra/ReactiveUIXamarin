@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ReactiveUI;
+using ReactiveUIXamarin.Core.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,6 +29,8 @@ namespace ReactiveUIXamarin.WindowsPhone
     {
         private TransitionCollection transitions;
 
+        AutoSuspendHelper autoSuspendHelper;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -35,6 +39,14 @@ namespace ReactiveUIXamarin.WindowsPhone
         {
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
+
+            autoSuspendHelper = new AutoSuspendHelper(this);
+
+            RxApp.SuspensionHost.CreateNewAppState = () => {
+                return new AppBootstrapper();
+            };
+
+            RxApp.SuspensionHost.SetupDefaultSuspendResume();
         }
 
         /// <summary>
@@ -45,6 +57,7 @@ namespace ReactiveUIXamarin.WindowsPhone
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            autoSuspendHelper.OnLaunched(e);
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
@@ -66,6 +79,8 @@ namespace ReactiveUIXamarin.WindowsPhone
 
                 // Set the default language
                 rootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
+
+                Xamarin.Forms.Forms.Init(e);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
