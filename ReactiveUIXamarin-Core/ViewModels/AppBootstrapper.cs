@@ -1,6 +1,7 @@
 ﻿using ModernHttpClient;
 using ReactiveUI;
 using ReactiveUI.XamForms;
+using ReactiveUIXamarin.Core.Services;
 using Splat;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,9 @@ namespace ReactiveUIXamarin.Core.ViewModels
             // de-dupe them. We're saying here, that we want our *backing*
             // HttpMessageHandler to be ModernHttpClient.
             Locator.CurrentMutable.RegisterConstant(new NativeMessageHandler(), typeof(HttpMessageHandler));
+
+            //Register API service
+            Locator.CurrentMutable.RegisterLazySingleton(() => new TinEyeApi(), typeof(ITinEyeApi));
         }
 
         public Page CreateMainPage()
